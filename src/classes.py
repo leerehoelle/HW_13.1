@@ -17,10 +17,21 @@ class Category:
 
 
     def goods_addition(self, product):
-        if not isinstance(self, product):
-            raise ValueError('Мы не можем добавлять то, что не является экземпляром класса Product')
-        self.__goods.append(product)
-        Category.unique_products += 1
+        if isinstance(product, Product):
+            if product.quantity == 0:
+                raise ValueError("Товар с нулевым количеством не может быть добавлен")
+            self.__goods.append(product)
+            Category.unique_products += 1
+        else:
+            raise ValueError("Мы не можем добавлять то, что не является экземпляром класса Product")
+
+
+    def average_price(self):
+        try:
+            total_price = sum(product.price for product in self.__goods)
+            return total_price / len(self)
+        except ZeroDivisionError:
+            return 0
 
     @property
     def goods(self):
