@@ -1,3 +1,5 @@
+from abc import ABC, abstractmethod
+
 class Category:
     name: str
     description: str
@@ -37,7 +39,26 @@ class Category:
         return f"{self.name}, количество продуктов: {sum(goods_list)} шт."
 
 
-class Product:
+class AbstractProduct(ABC):
+    @abstractmethod
+    def __len__(self):
+        pass
+    @abstractmethod
+    def __str__(self):
+        pass
+    @abstractmethod
+    def __repr__(self):
+        return f'Экземпляр класса {self.__class__.__name__}'
+
+
+class MixInLog:
+
+    def __repr__(self):
+        return f'Создан объект класса {self.__class__.__name__} с атрибутами: {self.__dict__}'
+
+
+
+class Product(AbstractProduct, MixInLog):
     name: str
     description: str
     price: float
@@ -87,20 +108,35 @@ class Product:
     def __str__(self):
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity})'
+
 
 class Smartphone(Product):
-    def __init__(self, description, price, quantity, performance, model, memory, color):
-        super().__init__(description, price, quantity)
+    def __init__(self, name, description, price, quantity, performance, model, memory, color):
+        super().__init__(name, description, price, quantity)
         self.performance = performance
         self.model = model
         self.memory = memory
         self.color = color
 
 
+    def __repr__(self):
+        return (f'{self.__class__.name} ({self.name}, {self.description},'
+                f'{self.quantity}, {self.performance}, {self.model}',
+                f'{self.memory}, {self.color}')
+
+
 
 class LawnGrass(Product):
-    def __init__(self, description, price, quantity, country, germin_period, color):
-        super().__init__(description, price, quantity)
+    def __init__(self, name, description, price, quantity, country, germin_period, color):
+        super().__init__(name, description, price, quantity)
         self.country = country
         self.germin_period = germin_period
         self.color = color
+
+
+    def __repr__(self):
+        return (f'{self.__class__.name} ({self.name}, {self.description},'
+                f'{self.quantity}, {self.country}, {self.germin_period}',
+                f'{self.color}')
