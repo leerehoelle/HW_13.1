@@ -25,6 +25,15 @@ class Category:
             goods_list.append(f'{item.name}, {item.price} руб. Остаток: {item.quantity} шт.')
         return goods_list
 
+    def __len__(self):
+        return len(self.__goods)
+
+    def __str__(self):
+        goods_list = []
+        for item in self.__goods:
+            goods_list.append(len(item))
+        return f"{self.name}, количество продуктов: {sum(goods_list)} шт."
+
 
 class Product:
     name: str
@@ -58,3 +67,18 @@ class Product:
             print("Цена введена некорректная")
             return None
         self.__price = check_price
+
+
+    def sum_price(self):
+        return self.quantity * self.price
+
+
+    def __add__(self, other):
+        return self.sum_price() + other.sum_price()
+
+
+    def __len__(self):
+        return self.quantity
+
+    def __str__(self):
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
