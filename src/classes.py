@@ -15,6 +15,8 @@ class Category:
 
 
     def goods_addition(self, product):
+        if not isinstance(self, product):
+            raise ValueError('Мы не можем добавлять то, что не является экземпляром класса Product')
         self.__goods.append(product)
         Category.unique_products += 1
 
@@ -74,6 +76,8 @@ class Product:
 
 
     def __add__(self, other):
+        if not isinstance(other, self.__class__):
+            raise ValueError('Складывать можно только между экземплярами одного класса')
         return self.sum_price() + other.sum_price()
 
 
@@ -82,3 +86,21 @@ class Product:
 
     def __str__(self):
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+
+class Smartphone(Product):
+    def __init__(self, description, price, quantity, performance, model, memory, color):
+        super().__init__(description, price, quantity)
+        self.performance = performance
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+
+
+class LawnGrass(Product):
+    def __init__(self, description, price, quantity, country, germin_period, color):
+        super().__init__(description, price, quantity)
+        self.country = country
+        self.germin_period = germin_period
+        self.color = color
