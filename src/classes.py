@@ -122,9 +122,11 @@ class Smartphone(Product):
 
 
     def __repr__(self):
-        return (f'{self.__class__.name} ({self.name}, {self.description},'
+        return (
+                f'{self.__class__.__name__} ({self.name}, {self.description},'
                 f'{self.quantity}, {self.performance}, {self.model}',
-                f'{self.memory}, {self.color}')
+                f'{self.memory}, {self.color}'
+        )
 
 
 
@@ -137,6 +139,8 @@ class LawnGrass(Product):
 
 
     def __repr__(self):
-        return (f'{self.__class__.name} ({self.name}, {self.description},'
+        return (
+                f'{self.__class__.__name__} ({self.name}, {self.description},'
                 f'{self.quantity}, {self.country}, {self.germin_period}',
-                f'{self.color}')
+                f'{self.color}'
+        )
