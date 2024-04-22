@@ -15,6 +15,8 @@ class Category:
 
 
     def goods_addition(self, product):
+        if not isinstance(self, product):
+            raise ValueError('Мы не можем добавлять то, что не является экземпляром класса Product')
         self.__goods.append(product)
         Category.unique_products += 1
 
